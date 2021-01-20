@@ -24,6 +24,7 @@ class ColabCode:
         self._install_extensions()
         self._start_server()
         self._run_code()
+        self.url = 0
 
     def _install_code(self):
         subprocess.run(
@@ -47,6 +48,7 @@ class ColabCode:
             ngrok.disconnect(public_url)
         url = ngrok.connect(addr=self.port, options={"bind_tls": True})
         print(f"Code Server can be accessed on: {url}")
+        self.url = url
 
     def _run_code(self):
         os.system(f"fuser -n tcp -k {self.port}")
@@ -63,5 +65,6 @@ class ColabCode:
             bufsize=1,
             universal_newlines=True,
         ) as proc:
-            for line in proc.stdout:
-                print(line, end="")
+            #for line in proc.stdout:
+            #    print(line, end="")
+            print(self.url)
